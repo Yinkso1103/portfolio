@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet - Borne de Commande Restaurant</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; }
+
+        .navbar { background: #1a1a2e; padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-brand { color: #fff; font-size: 1.5rem; font-weight: 600; text-decoration: none; }
+        .btn-back { background: #e8590c; color: #fff; padding: 0.5rem 1.5rem; border-radius: 5px; text-decoration: none; transition: background 0.3s; }
+        .btn-back:hover { background: #c44a08; }
+
+        .hero-section { background: linear-gradient(135deg, #e8590c 0%, #c44a08 50%, #1a1a2e 100%); color: white; padding: 4rem 0; text-align: center; }
+        .hero-section h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero-section p { font-size: 1.1rem; max-width: 800px; margin: 0 auto; opacity: 0.9; }
+        .hero-badges { margin-top: 1.5rem; display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+        .hero-badge { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .project-info { background: white; padding: 3rem; margin: -3rem auto 3rem; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); max-width: 1100px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .info-item { text-align: center; }
+        .info-item i { font-size: 2rem; color: #e8590c; margin-bottom: 0.5rem; display: block; }
+        .info-item h4 { font-size: 0.85rem; color: #666; margin-bottom: 0.3rem; }
+        .info-item p { font-weight: 600; color: #333; font-size: 0.95rem; }
+        .status-badge { display: inline-block; background: #fff3cd; color: #856404; border: 1px solid #ffc107; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+
+        .section { padding: 3rem 0; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: #333; position: relative; padding-bottom: 1rem; }
+        .section-title:after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(135deg, #e8590c 0%, #c44a08 100%); }
+
+        .flow-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .flow-step { background: white; border-radius: 10px; padding: 1.5rem 1rem; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.08); border-top: 4px solid #e8590c; }
+        .flow-step .step-num { background: #e8590c; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; margin: 0 auto 0.8rem; }
+        .flow-step h4 { font-size: 0.95rem; color: #333; margin-bottom: 0.4rem; }
+        .flow-step p { font-size: 0.8rem; color: #666; }
+        .flow-step .window-name { font-size: 0.75rem; color: #e8590c; font-style: italic; margin-top: 0.4rem; }
+
+        .screenshot-container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 3px 15px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .screenshot-header { display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid #f1f3f4; }
+        .screenshot-icon { font-size: 1.5rem; color: #e8590c; margin-right: 1rem; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: #fff3ec; border-radius: 10px; flex-shrink: 0; }
+        .screenshot-header h3 { font-size: 1.3rem; color: #333; margin: 0; }
+        .screenshot-description { color: #666; margin-bottom: 1.5rem; line-height: 1.8; }
+        .placeholder-img { width: 100%; height: 250px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px; border: 2px dashed #dee2e6; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #adb5bd; }
+        .placeholder-img i { font-size: 3rem; margin-bottom: 0.5rem; }
+        .placeholder-img p { font-size: 0.9rem; }
+
+        .arch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .arch-card { padding: 1.5rem; border-radius: 10px; border-left: 5px solid; }
+        .arch-card.model { background: #e7f3ff; border-color: #007bff; }
+        .arch-card.view { background: #e8f5e9; border-color: #28a745; }
+        .arch-card.viewmodel { background: #fff8e1; border-color: #ffc107; }
+        .arch-card.services { background: #fce4ec; border-color: #dc3545; }
+        .arch-card.helpers { background: #f3e5f5; border-color: #9c27b0; }
+        .arch-card h4 { font-size: 1rem; margin-bottom: 0.8rem; }
+        .arch-card ul { list-style: none; padding: 0; }
+        .arch-card ul li { font-size: 0.85rem; color: #555; padding: 0.2rem 0; }
+        .arch-card ul li::before { content: "▸ "; color: #888; }
+        .arch-card .note { font-size: 0.8rem; color: #555; margin-top: 0.8rem; }
+
+        .db-tables { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .db-table { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+        .db-table-header { background: #1a1a2e; color: white; padding: 0.8rem 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .db-field { display: flex; align-items: center; padding: 0.5rem 1rem; font-size: 0.85rem; border-bottom: 1px solid #f1f3f4; }
+        .db-field:last-child { border-bottom: none; }
+        .field-name { font-weight: 600; color: #333; min-width: 150px; }
+        .field-type { color: #007bff; font-size: 0.8rem; flex: 1; }
+        .badge-pk { background: #ffc107; color: #333; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; font-weight: 700; }
+        .badge-fk { background: #17a2b8; color: white; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; font-weight: 700; }
+
+        .tech-stack { background: linear-gradient(135deg, #e8590c 0%, #1a1a2e 100%); color: white; padding: 3rem 0; }
+        .tech-stack .section-title { color: white; }
+        .tech-stack .section-title:after { background: white; }
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+        .tech-item { background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.2s; }
+        .tech-item:hover { transform: translateY(-3px); }
+        .tech-item i { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
+        .tech-item h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+        .tech-item p { font-size: 0.85rem; opacity: 0.85; }
+
+        .competences { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 3px 15px rgba(0,0,0,0.1); }
+        .competence-item { display: flex; align-items: flex-start; padding: 1rem; margin-bottom: 0.8rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #e8590c; }
+        .competence-item i { color: #e8590c; margin-right: 1rem; margin-top: 0.2rem; font-size: 1.1rem; flex-shrink: 0; }
+        .competence-item h5 { font-size: 1rem; color: #333; margin-bottom: 0.3rem; }
+        .competence-item p { font-size: 0.85rem; color: #666; margin: 0; }
+
+        .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .roadmap-item { padding: 1.2rem; border-radius: 8px; border-left: 4px solid; }
+        .roadmap-item.p0 { background: #ffeef0; border-color: #dc3545; }
+        .roadmap-item.p1 { background: #fff3cd; border-color: #ffc107; }
+        .roadmap-item.p2 { background: #d4edda; border-color: #28a745; }
+        .roadmap-item h5 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+        .roadmap-item p { font-size: 0.82rem; color: #555; margin: 0; }
+        .priority-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem; display: block; }
+
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .tool-item { background: white; padding: 1.2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); display: flex; align-items: center; gap: 1rem; }
+        .tool-item i { font-size: 1.8rem; color: #e8590c; flex-shrink: 0; }
+        .tool-item h5 { font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .tool-item p { font-size: 0.78rem; color: #666; margin: 0; }
+
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 1.8rem; }
+            .project-info { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">Yanis Zemouli</a>
+            <a href="index.html#projects-section" class="btn-back"><i class="fa fa-arrow-left"></i> Retour au portfolio</a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1><i class="fa fa-cutlery"></i> Borne de Commande Restaurant</h1>
+            <p>Application bureau WPF/C# permettant aux clients de commander de manière autonome via une interface interactive — architecture MVVM complète avec base de données MySQL</p>
+            <div class="hero-badges">
+                <span class="hero-badge"><i class="fa fa-code"></i> C# / WPF</span>
+                <span class="hero-badge"><i class="fa fa-database"></i> MySQL</span>
+                <span class="hero-badge"><i class="fa fa-sitemap"></i> MVVM</span>
+                <span class="hero-badge"><i class="fa fa-calendar"></i> Janvier 2026 — en cours</span>
+                <span class="hero-badge"><i class="fa fa-graduation-cap"></i> CFA Ingetis</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="project-info">
+            <h2 style="text-align:center; margin-bottom:0.5rem;">Informations du Projet</h2>
+            <div class="info-grid">
+                <div class="info-item"><i class="fa fa-calendar"></i><h4>Période</h4><p>Janvier — Mars 2026</p></div>
+                <div class="info-item"><i class="fa fa-graduation-cap"></i><h4>Contexte</h4><p>CFA Ingetis (local)</p></div>
+                <div class="info-item"><i class="fa fa-user"></i><h4>Modalité</h4><p>Projet individuel</p></div>
+                <div class="info-item"><i class="fa fa-laptop"></i><h4>Type</h4><p>Application Desktop</p></div>
+                <div class="info-item"><i class="fa fa-github"></i><h4>Code source</h4><p>GitHub (lien à venir)</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Présentation -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Présentation du Projet</h2>
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-bullseye"></i></div>
+                    <h3>Contexte et Objectifs</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>Ce projet consiste en la conception et le développement d'une application bureau de type borne de commande pour un restaurant. L'application permet à un client d'effectuer une commande de manière autonome via une interface interactive, sans intervention du personnel.</p>
+                    <br>
+                    <p>Elle intègre également un espace d'administration permettant de gérer les produits et les catégories du menu. L'application a été développée en <strong>C# avec le framework WPF</strong>, en suivant l'<strong>architecture MVVM</strong>. Elle se connecte à une base de données <strong>MySQL</strong> via le connecteur MySql.Data.</p>
+                    <br>
+                    <p><strong>Objectifs clés :</strong> réduire les files d'attente, minimiser les erreurs de commande, offrir une expérience utilisateur moderne et intuitive, et permettre à l'administrateur de gérer le catalogue en autonomie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parcours utilisateur -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <h2 class="section-title">Parcours Utilisateur</h2>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <h4>Écran de Veille</h4>
+                    <p>Écran d'accueil affiché au démarrage. Un clic démarre la commande.</p>
+                    <p class="window-name">VeilleWindow</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <h4>Choix du type</h4>
+                    <p>Le client sélectionne « Sur place » ou « À emporter ».</p>
+                    <p class="window-name">ChoixWindow</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <h4>Menu</h4>
+                    <p>Navigation par catégories, ajout des produits au panier. Produits indisponibles bloqués.</p>
+                    <p class="window-name">MenuWindow</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">4</div>
+                    <h4>Panier</h4>
+                    <p>Consultation, modification des quantités, suppression d'articles, validation.</p>
+                    <p class="window-name">PanierWindow</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">5</div>
+                    <h4>Paiement</h4>
+                    <p>Choix CB ou espèces, traitement simulé, génération du n° de commande.</p>
+                    <p class="window-name">PaymentWindow</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">6</div>
+                    <h4>Administration</h4>
+                    <p>Accès sécurisé BCrypt pour gérer catégories et produits.</p>
+                    <p class="window-name">LoginWindow + AdminWindow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Captures d'écran -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <h2 class="section-title">Captures d'écran</h2>
+
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-tv"></i></div>
+                    <h3>Écran de Veille</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>Écran d'accueil affiché en attente de client. Un clic sur l'écran démarre le parcours de commande. Interface conçue pour être attrayante et visible à distance sur un écran tactile.</p>
+                </div>
+                <img src="images/borne_restaurant/page_veille.png" alt="Écran de veille" class="screenshot-img" style="max-width: 100%; height: auto;">
+            </div>
+
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-th-large"></i></div>
+                    <h3>Menu & Catalogue Produits</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>Navigation par catégories (avec tag et couleur personnalisée), affichage des produits avec nom, prix et image. Les produits avec le statut « Indispo » ou une quantité à 0 ne peuvent pas être ajoutés au panier.</p>
+                </div>
+                <img src="images/borne_restaurant/page_menu.png" alt="Page de menu" class="screenshot-img" style="max-width: 100%; height: auto;">
+            </div>
+
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-shopping-cart"></i></div>
+                    <h3>Gestion du Panier</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>Affichage en temps réel de tous les articles ajoutés avec sous-totaux et total général. Le client peut augmenter/diminuer les quantités ou supprimer un article.</p>
+                </div>
+                <img src="images/borne_restaurant/page_panier.png" alt="Page du Panier" class="screenshot-img" style="max-width: 100%; height: auto;">
+            </div>
+
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-credit-card"></i></div>
+                    <h3>Écran de Paiement</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>Choix du mode de paiement (carte bancaire ou espèces). Traitement simulé avec indicateur de progression (3 secondes), génération d'un numéro de commande unique, puis retour automatique à l'écran de veille.</p>
+                </div>
+                <img src="images/borne_restaurant/page_paiement.png" alt="Page de Paiement" class="screenshot-img" style="max-width: 100%; height: auto;">
+            </div>
+
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-lock"></i></div>
+                    <h3>Interface d'Administration</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>Accès sécurisé par authentification (nom d'utilisateur + mot de passe haché BCrypt). L'administrateur peut ajouter, modifier, supprimer des catégories et des produits, et gérer les stocks et statuts de disponibilité.</p>
+                </div>
+                <img src="images/borne_restaurant/page_admin.png" alt="Page Admin" class="screenshot-img" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture MVVM -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <h2 class="section-title">Architecture MVVM</h2>
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-sitemap"></i></div>
+                    <h3>Organisation du projet en couches</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>L'application respecte strictement le patron de conception <strong>MVVM (Model-View-ViewModel)</strong> et s'appuie sur deux interfaces clés de .NET : <code>INotifyPropertyChanged</code> pour notifier automatiquement l'interface des changements de propriétés, et <code>ICommand</code> pour lier les actions utilisateur directement aux ViewModels sans code métier dans les vues.</p>
+                </div>
+                <div class="arch-grid">
+                    <div class="arch-card model">
+                        <h4>📦 Models</h4>
+                        <ul><li>Produit</li><li>Categorie</li><li>Panier</li><li>LigneCommande</li><li>Utilisateur</li></ul>
+                        <p class="note">Classes de données pures, sans logique métier, utilisées par toutes les couches.</p>
+                    </div>
+                    <div class="arch-card view">
+                        <h4>🎨 Views (XAML)</h4>
+                        <ul><li>VeilleWindow</li><li>ChoixWindow</li><li>MenuWindow</li><li>PanierWindow</li><li>PaymentWindow</li><li>LoginWindow + AdminWindow</li></ul>
+                        <p class="note">Code-behind minimal. Binding XAML pur vers les ViewModels.</p>
+                    </div>
+                    <div class="arch-card viewmodel">
+                        <h4>🔄 ViewModels</h4>
+                        <ul><li>VeilleViewModel</li><li>ChoixViewModel</li><li>MenuViewModel</li><li>PanierViewModel</li><li>PaymentViewModel</li><li>LoginViewModel</li></ul>
+                        <p class="note">Héritent de ViewModelBase. Exposent des propriétés et des ICommand.</p>
+                    </div>
+                    <div class="arch-card services">
+                        <h4>⚙️ Services</h4>
+                        <ul><li>DataService</li></ul>
+                        <p class="note">Centralise toutes les requêtes SQL (CRUD). Les ViewModels n'accèdent jamais directement à la BDD.</p>
+                    </div>
+                    <div class="arch-card helpers">
+                        <h4>🛠️ Helpers</h4>
+                        <ul><li>RelayCommand</li><li>ViewModelBase</li></ul>
+                        <p class="note">RelayCommand implémente ICommand en une ligne. ViewModelBase gère INotifyPropertyChanged et SetProperty.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Base de données -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <h2 class="section-title">Base de Données</h2>
+            <div class="screenshot-container">
+                <div class="screenshot-header">
+                    <div class="screenshot-icon"><i class="fa fa-database"></i></div>
+                    <h3>Schéma MySQL — restaurantdb</h3>
+                </div>
+                <div class="screenshot-description">
+                    <p>La base de données comprend 3 tables principales reliées par des clés étrangères. Les mots de passe administrateurs sont stockés sous forme de <strong>hachage BCrypt</strong>. La relation entre produits et catégories est assurée par une clé étrangère <code>categorie_id</code>.</p>
+                </div>
+                <div class="db-tables">
+                    <div class="db-table">
+                        <div class="db-table-header"><i class="fa fa-tag"></i> categories</div>
+                        <div class="db-table-body">
+                            <div class="db-field"><span class="field-name">id</span><span class="field-type">INT AUTO_INCREMENT</span><span><span class="badge-pk">PK</span></span></div>
+                            <div class="db-field"><span class="field-name">nom</span><span class="field-type">VARCHAR(100)</span></div>
+                            <div class="db-field"><span class="field-name">tag</span><span class="field-type">VARCHAR(50)</span></div>
+                            <div class="db-field"><span class="field-name">couleur</span><span class="field-type">VARCHAR(7)</span></div>
+                        </div>
+                    </div>
+                    <div class="db-table">
+                        <div class="db-table-header"><i class="fa fa-cutlery"></i> produits</div>
+                        <div class="db-table-body">
+                            <div class="db-field"><span class="field-name">id</span><span class="field-type">INT AUTO_INCREMENT</span><span><span class="badge-pk">PK</span></span></div>
+                            <div class="db-field"><span class="field-name">nom</span><span class="field-type">VARCHAR(150)</span></div>
+                            <div class="db-field"><span class="field-name">prix</span><span class="field-type">DECIMAL(10,2)</span></div>
+                            <div class="db-field"><span class="field-name">image_url</span><span class="field-type">VARCHAR(255)</span></div>
+                            <div class="db-field"><span class="field-name">categorie_id</span><span class="field-type">INT</span><span><span class="badge-fk">FK</span></span></div>
+                            <div class="db-field"><span class="field-name">Quantite</span><span class="field-type">INT</span></div>
+                            <div class="db-field"><span class="field-name">Statut</span><span class="field-type">VARCHAR(20)</span></div>
+                        </div>
+                    </div>
+                    <div class="db-table">
+                        <div class="db-table-header"><i class="fa fa-user-secret"></i> Utilisateurs</div>
+                        <div class="db-table-body">
+                            <div class="db-field"><span class="field-name">Id</span><span class="field-type">INT AUTO_INCREMENT</span><span><span class="badge-pk">PK</span></span></div>
+                            <div class="db-field"><span class="field-name">NomUtilisateur</span><span class="field-type">VARCHAR(100)</span></div>
+                            <div class="db-field"><span class="field-name">MotDePasseHash</span><span class="field-type">VARCHAR(255)</span></div>
+                            <div class="db-field"><span class="field-name">Role</span><span class="field-type">VARCHAR(50)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies -->
+    <section class="tech-stack">
+        <div class="container">
+            <h2 class="section-title">Technologies Utilisées</h2>
+            <div class="tech-grid">
+                <div class="tech-item"><i class="fa fa-code"></i><h4>C#</h4><p>Langage principal pour toute la logique applicative</p></div>
+                <div class="tech-item"><i class="fa fa-windows"></i><h4>WPF / XAML</h4><p>Framework UI Windows, interfaces tactiles .NET 6+</p></div>
+                <div class="tech-item"><i class="fa fa-sitemap"></i><h4>Pattern MVVM</h4><p>Architecture stricte avec DataBinding et ICommand</p></div>
+                <div class="tech-item"><i class="fa fa-database"></i><h4>MySQL 8.1</h4><p>Base de données + MySql.Data (ADO.NET)</p></div>
+                <div class="tech-item"><i class="fa fa-server"></i><h4>XAMPP</h4><p>Serveur local MySQL + phpMyAdmin</p></div>
+                <div class="tech-item"><i class="fa fa-github"></i><h4>Git / GitHub</h4><p>Versionnement et sauvegarde du code source</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outils -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Environnement de Développement</h2>
+            <div class="tools-grid">
+                <div class="tool-item"><i class="fa fa-laptop"></i><div><h5>Visual Studio</h5><p>IDE principal C# / WPF</p></div></div>
+                <div class="tool-item"><i class="fa fa-server"></i><div><h5>XAMPP</h5><p>Serveur local Apache + MySQL</p></div></div>
+                <div class="tool-item"><i class="fa fa-database"></i><div><h5>phpMyAdmin</h5><p>Administration base de données</p></div></div>
+                <div class="tool-item"><i class="fa fa-github"></i><div><h5>GitHub</h5><p>Versionnement et hébergement du code</p></div></div>
+                <div class="tool-item"><i class="fa fa-file-text-o"></i><div><h5>Docs Microsoft</h5><p>Documentation officielle C# / WPF / .NET</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compétences E6 -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <h2 class="section-title">Compétences Travaillées (Épreuve E6)</h2>
+            <div class="competences">
+                <div class="competence-item">
+                    <i class="fa fa-cogs"></i>
+                    <div>
+                        <h5>Concevoir et développer une solution applicative</h5>
+                        <p>Analyse des besoins, modélisation (MCD/MLD, diagrammes de cas d'utilisation), développement complet en C#/WPF avec architecture MVVM stricte.</p>
+                    </div>
+                </div>
+                <div class="competence-item">
+                    <i class="fa fa-wrench"></i>
+                    <div>
+                        <h5>Assurer la maintenance corrective ou évolutive d'une solution applicative</h5>
+                        <p>Évolution continue : ajout de fonctionnalités (admin, gestion stocks), corrections de bugs, documentation du code source pour faciliter la maintenance.</p>
+                    </div>
+                </div>
+                <div class="competence-item">
+                    <i class="fa fa-database"></i>
+                    <div>
+                        <h5>Gérer les données</h5>
+                        <p>Conception de la base de données MySQL (MCD → MLD → SQL), opérations CRUD via DataService, sécurisation par hachage BCrypt, gestion des clés étrangères.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <h2 class="section-title">Fonctionnalités à Venir</h2>
+            <div class="roadmap-grid">
+                <div class="roadmap-item p0">
+                    <span class="priority-label" style="color:#dc3545;">🔴 Critique</span>
+                    <h5>Impression de tickets</h5>
+                    <p>Ticket client + cuisine avec numéro de commande (standard ESC/POS)</p>
+                </div>
+                <div class="roadmap-item p1">
+                    <span class="priority-label" style="color:#856404;">🟡 Haute</span>
+                    <h5>Base de données commandes</h5>
+                    <p>Historique complet, statuts des commandes, statistiques de vente</p>
+                </div>
+                <div class="roadmap-item p1">
+                    <span class="priority-label" style="color:#856404;">🟡 Haute</span>
+                    <h5>Paiement réel CB</h5>
+                    <p>Intégration TPE bancaire pour paiements sécurisés réels</p>
+                </div>
+                <div class="roadmap-item p2">
+                    <span class="priority-label" style="color:#155724;">🟢 Moyenne</span>
+                    <h5>Personnalisation produits</h5>
+                    <p>Options, suppléments, allergènes</p>
+                </div>
+                <div class="roadmap-item p2">
+                    <span class="priority-label" style="color:#155724;">🟢 Moyenne</span>
+                    <h5>Multi-langues</h5>
+                    <p>Interface disponible en français, anglais, espagnol</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="text-align:center; padding-bottom:5rem;">
+        <a href="index.html#projects-section" class="btn-back" style="display:inline-block; padding:1rem 3rem; font-size:1.1rem;">
+            <i class="fa fa-arrow-left"></i> Retour à la liste des projets
+        </a>
+    </section>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
